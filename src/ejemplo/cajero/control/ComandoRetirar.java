@@ -37,6 +37,10 @@ public class ComandoRetirar implements Comando {
 		System.out.println("Ingrese el valor a retirar");
 		String valor = console.nextLine();
 	
+		retirar(cuenta, valor);
+	}
+
+	private void retirar(Cuenta cuenta, String valor) throws Exception {
 		try {
 			long valorNumerico = Long.parseLong(valor);
 			cuenta.retirar(valorNumerico);

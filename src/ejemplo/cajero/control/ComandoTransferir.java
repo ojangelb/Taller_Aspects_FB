@@ -50,13 +50,17 @@ public class ComandoTransferir implements Comando {
 			// se retira primero y luego se consigna
 			// si no se puede retirar, no se hace la consignación
 			
-			long valorNumerico = Long.parseLong(valor);
-			cuentaOrigen.retirar(valorNumerico);
-			cuentaDestino.consignar(valorNumerico);
+			retirar(cuentaOrigen, cuentaDestino, valor);
 		
 		} catch (NumberFormatException e) {
 			throw new Exception("Valor a transferir no válido : " + valor);
 		}
+	}
+
+	private void retirar(Cuenta cuentaOrigen, Cuenta cuentaDestino, String valor) throws Exception {
+		long valorNumerico = Long.parseLong(valor);
+		cuentaOrigen.retirar(valorNumerico);
+		cuentaDestino.consignar(valorNumerico);
 	}
 
 }

@@ -37,6 +37,10 @@ public class ComandoConsignar implements Comando {
 		System.out.println("Ingrese el valor a consignar");
 		String valor = console.nextLine();
 	
+		consignar(cuenta, valor);
+	}
+
+	private void consignar(Cuenta cuenta, String valor) throws Exception {
 		try {
 			long valorNumerico = Long.parseLong(valor);
 			cuenta.consignar(valorNumerico);
