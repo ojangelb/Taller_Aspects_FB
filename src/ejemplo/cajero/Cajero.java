@@ -1,7 +1,9 @@
 package ejemplo.cajero;
 
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
 import ejemplo.cajero.control.Comando;
@@ -16,7 +18,6 @@ import ejemplo.cajero.modelo.Cuenta;
  * Simulador de un Cajero de Banco
  */
 public class Cajero {
-	
 	/**
 	 * Programa principal
 	 * @param args parámetros de línea de comandos. Son ignorados por el programa.
@@ -86,15 +87,41 @@ public class Cajero {
 	// carga los comandos usados en el programa
 	private static List<Comando> cargaComandos() {
 		
+		return retornaComandos();
+	}
+
+
+	private static List<Comando> retornaComandos() {
 		// crea los comandos que se van a usar en la aplicación
 		List<Comando> comandos = new ArrayList<>();
 		
 		comandos.add(new ComandoListarCuentas());
 		comandos.add(new ComandoRetirar());
 		comandos.add(new ComandoConsignar());
-		comandos.add(new ComandoTransferir());
+		
+		retornaValidaTranferencia(comandos);
 
 		return comandos;
+	}
+
+
+	private static List<Comando>  retornaValidaTranferencia(List<Comando> comandos) {
+	    Properties opciones = new Properties();
+		
+		try {
+			opciones.load(new FileReader("config.properties"));			
+		} catch (Exception e) {
+			System.out.println("Error leyendo archivo de configración");
+		}
+		
+		boolean transferencias = Boolean.valueOf(opciones.getProperty("transferencias"));
+		
+		if (transferencias) {
+			comandos.add(new ComandoTransferir());
+		}
+		
+		
+	   return comandos;
 	}
 	
 	
@@ -126,5 +153,6 @@ public class Cajero {
 		
 		return comandoSeleccionado;
 	}
+	
 	
 }

@@ -1,29 +1,28 @@
+package aspects;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ejemplo.cajero.modelo.Cuenta;
 
-public aspect Consignacion {
-	
-	 
-	pointcut consignar(): call (private * consignar (..) ); 
+public aspect Transferir {
+pointcut guardarTransferencia(): call (private * transferir (..) ); 
 
 	
-	before(): consignar () {
+	before(): guardarTransferencia() {
 		System.out.println("Ejecutando : "); 
 		Object[] args = thisJoinPoint.getArgs();
 		Object cuentaObj = args[0];
-		Cuenta cuenta = (Cuenta) cuentaObj;
-		Object valorOper = args[1];
+		Cuenta cuentaOrg = (Cuenta) cuentaObj;
+		Object cuentaDesObj = args[1];
+		Cuenta cuentaDest = (Cuenta) cuentaDesObj;
+		Object valorOper = args[2];
 		String valorOperStr = (String) valorOper;
-		String data = "C;"+cuenta.getNumero()+";"+ cuenta.getSaldo() + ";"+ valorOperStr;
-		System.out.println(" "+ cuenta.getNumero());
+		String data = "T;"+cuentaOrg.getNumero()+";"+ cuentaOrg.getSaldo() + ";" +cuentaDest.getNumero()+";"+ cuentaDest.getSaldo() + ";"+ valorOperStr;
 		auditLogFile(data);
 	}
 	
@@ -44,8 +43,5 @@ public aspect Consignacion {
 			e.printStackTrace();
 			System.out.println(e.toString());
 		}
-		
-		
 	}
-
 }
