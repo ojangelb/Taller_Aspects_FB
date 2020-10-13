@@ -9,10 +9,10 @@ import java.util.Date;
 import ejemplo.cajero.modelo.Cuenta;
 
 public aspect Retirar {
-	pointcut guardarRetiro(): call (private * retirar (..) ); 
+	pointcut guardarOperacion(): call (private * retirar (..) ); 
 
 	
-	before(): guardarRetiro () {
+	before(): guardarOperacion () {
 		System.out.println("Ejecutando : "); 
 		Object[] args = thisJoinPoint.getArgs();
 		Object cuentaObj = args[0];

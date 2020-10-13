@@ -12,10 +12,10 @@ import ejemplo.cajero.modelo.Cuenta;
 
 public aspect Consignar {
 	
-pointcut consignar(): call (private * consignar (..) ); 
+pointcut guardarOperacion(): call (private * consignar (..) ); 
 
 	
-	before(): consignar () {
+	before(): guardarOperacion () {
 		System.out.println("Ejecutando : "); 
 		Object[] args = thisJoinPoint.getArgs();
 		Object cuentaObj = args[0];

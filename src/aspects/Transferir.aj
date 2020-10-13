@@ -10,10 +10,10 @@ import java.util.Date;
 import ejemplo.cajero.modelo.Cuenta;
 
 public aspect Transferir {
-pointcut guardarTransferencia(): call (private * transferir (..) ); 
+pointcut guardarOperacion(): call (private * transferir (..) ); 
 
 	
-	before(): guardarTransferencia() {
+	before(): guardarOperacion() {
 		System.out.println("Ejecutando : "); 
 		Object[] args = thisJoinPoint.getArgs();
 		Object cuentaObj = args[0];
